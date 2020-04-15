@@ -52,3 +52,35 @@ class LimitPromise {
         }
     }
 }
+class PromiseLimit {
+    constructor(max){
+        this._max = max;
+        this._count = 0;
+        this.taskQueue = []
+    }
+    call(caller, ...args){
+        return new Promise((resolve, reject) => {
+            let task = this.createTask(caller, args, resolve, reject)
+            if(this._count < this._max){
+                task()
+            }else{
+                this._taskQueue.push(task);
+            }
+        })
+    }
+    createTask(caller, args, resolve, reject){
+        return () => {
+            caller(...args)
+            .then(resolve)
+            .catch(reject)
+            .finally(() => {
+                this._count--;
+                if(this._taskQueue.length >= 1){
+                    let task = this._taskQueue.shift();
+                    task();
+                }
+            })
+            this._count++;
+        }
+    }
+}

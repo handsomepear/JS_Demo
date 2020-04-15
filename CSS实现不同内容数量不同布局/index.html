@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            width: 100%;
+            height: 100vh;
+        }
+        ul{
+            margin: 20px auto;
+            width: 500px;
+            height: 500px;
+            border: 2px solid red;
+            /* 得加上font-size: 0否则会因为空格留白导致li不能在同一行 */
+            font-size: 0;
+        }
+        ul li{
+            display: inline-block;
+            text-align: center;
+            border: 1px solid #000;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        /* 倒数第一张图片也是第一张图片，即只有一张图片时 */
+        li:nth-last-child(1):first-child{
+            width: 100%;
+            height: 100%;
+        }
+        /* 倒数第二张图片也是第二张图片，即有两张图片时 */
+        li:nth-last-child(2):first-child,
+        /* 第一张图片之后的样式 */
+        li:nth-last-child(2):first-child ~li{
+            width: calc(100% / 2);
+            height: calc(100% / 2);
+        }
+
+        li:nth-last-child(4):first-child,
+        li:nth-last-child(4):first-child ~li{
+            width: calc(100% / 2);
+            height: calc(100% / 2);
+        }
+
+        li:nth-last-child(9):first-child,
+        li:nth-last-child(9):first-child ~li{
+            width: calc(100% / 3);
+            height: calc(100% / 3);
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li>1</li>
+    </ul>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+    </ul>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+    </ul>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+        <li>9</li>
+    </ul>
+</body>
+</html>
