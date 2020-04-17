@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            padding-top: 200px;
+        }
+        .container{
+            margin: 0 auto;
+            height: 30px;
+            width: 40%;
+            border: 2px solid gray;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        #loading{
+            height: 30px;
+            width: 0px;
+            line-height: 30px;
+            background-color: steelblue;
+            text-align: right;
+            transition: width 0.3s linear;
+        }
+        button{
+            display: block;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="loading">0%</div>
+    </div>
+    <button onclick="loadUsers([1,2,3,4,5,6,7,8,9,10])">开始加载</button>
+    <script>
+        let loading = document.getElementById("loading")
+        async function loadUsers(users) {
+            for(let i = 0, len = users.length; i < len; i++){
+                let user = await ajax(`http://jsonplaceholder.typicode.com/users?id=${users[i]}`)
+                let percent = ((i + 1) / len) * 100;
+                loading.style.width = Math.round(percent) + "%";
+                loading.innerHTML = Math.round(percent) + "%";
+            }
+        }
+        class ParamError extends Error {
+            constructor(msg){
+                super(msg);
+                this.name = 'ParamError'
+            }
+        }
+        class HttpError extends Error {
+            constructor(msg){
+                super(msg);
+                this.name = 'HttpError'
+            }
+        }
+        function ajax(url) {
+            return new Promise((resolve, reject) => {
+                if(!/^http/.test(url)){
+                    throw new ParamError('请求地址错误')
+                }
+                let xhr = new XMLHttpRequest();
+                xhr.open("GET", url, true);
+                xhr.onload = function(){
+                    if(xhr.status == 200 || xhr.status == 304){
+                        resolve(JSON.parse(xhr.responseText))
+                    }else if(xhr.status == 404){
+                        //因为此处代码是异步的，所以不能直接throw错误，得需要reject
+                        reject(new HttpError('用户不存在'))
+                    }
+                    else{
+                        reject("请求失败")
+                    }
+                }
+                xhr.onerror = function(){
+                    reject(this)
+                }
+                xhr.send();
+            })
+        }
+    </script>
+</body>
+</html>
