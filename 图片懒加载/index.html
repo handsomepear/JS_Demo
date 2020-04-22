@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        img{
+            width: 400px;
+            height: 300px;
+            position: absolute;
+            margin: 50px;
+        }
+    </style>
+</head>
+<body>
+    <img src="#" alt="图片1" data-src = "./img/1.jpg">
+    <img src="#" alt="图片2" data-src = "./img/2.jpg" style="top: 2000px;">
+    <script>
+        let imgs = document.getElementsByTagName("img");
+        let windowHeight = window.innerHeight;
+        let advanceDistance = 200;//提前加载量
+        window.onload = function(e){
+            loadImg(imgs);
+        }
+        window.onscroll = function(e){
+            loadImg(imgs);
+        }
+        function loadImg(imgs){
+            for(let i = 0; i < imgs.length; i++){
+                if(imgs[i].getBoundingClientRect().top < windowHeight + advanceDistance){
+                    //imgs[i].getBoundingClientRect().top为获取图片距离浏览器窗口的垂直距离
+                    imgs[i].src = imgs[i].dataset.src;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
