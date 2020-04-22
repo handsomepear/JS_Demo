@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .circle{
+                width: 200px;
+                height: 200px;
+                position: relative;
+                font-size: 0;
+            }
+            .left,.right{
+                width: 50%;
+                height: 100%;
+                position: absolute;
+                overflow: hidden;
+            }
+            .left{
+                left: 0;
+            }
+            .right{
+                right:0
+            }
+            .progress-bar{
+                width: 200%;
+                height: 100%;
+                transform: rotate(45deg);
+                box-sizing: border-box;
+                border-radius: 50%;
+                border: 12px solid transparent;
+            }
+            .bar-left{
+                border-left-color: green;
+                border-bottom-color: green;
+                position: absolute;
+                left: 0;
+                animation: leftAnimation linear 6s;
+            }
+            .bar-right{
+                border-right-color: green;
+                border-top-color: green;
+                position: absolute;
+                right: 0;
+                animation: rightAnimation linear 3s;
+            }
+            @keyframes leftAnimation{
+                0% {
+                    transform: rotate(-135deg);
+                }
+                50% {
+                    transform: rotate(-135deg);
+                }
+                100% {
+                    transform: rotate(45deg);
+                }
+            }
+            @keyframes rightAnimation{
+                0% {
+                    transform: rotate(-135deg);
+                }
+                100% {
+                    transform: rotate(45deg);
+                }
+            }
+    </style>
+</head>
+<body>
+    <div class="circle">
+        <div class="left">
+            <div class="progress-bar bar-left"></div>
+        </div>
+        <div class="right">
+            <div class="progress-bar bar-right"></div>
+        </div>
+    </div>
+</body>
+</html>
