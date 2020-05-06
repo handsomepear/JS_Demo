@@ -34,6 +34,31 @@
                 }
             }
         }
+        function debounce(fn, wait){
+            let timerId;
+            return function(){
+                if(timerId){
+                    clearTimeout(timerId);
+                }
+                timerId = setTimeout(() => {
+                    fn.call(this);
+                },wait)
+            }
+        }
+        function throttle(fn, wait){
+            let pre = 0;
+            return function(){
+                let now = Date.now();
+                if(now - pre > wait){
+                    fn.call(this);
+                    pre = now;
+                }
+            }
+        }
+        let a = 1;
+        document.onmousemove = throttle(() => {
+            console.log(a++)
+        },2000)
     </script>
 </body>
 </html>
